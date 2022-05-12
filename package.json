@@ -9,12 +9,18 @@
   "author": "Sebastien Martinez",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.17.3",
     "exprss": "^0.0.1-security",
     "firebase": "^9.6.8",
     "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.19.0"
+    "firebase-functions": "^3.19.0",
+    "fireorm": "^0.23.3",
+    "mysql2": "^2.3.3",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.19.0"
   }
 }
