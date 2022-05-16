@@ -1,8 +1,13 @@
+
+import { createServer } from "http";
+import { Server } from "socket.io";
+
 const express = require('express');
 const cors = require('cors');
 let router = require('./router');
 const bodyParser = require("body-parser");
 require('dotenv').config();
+
 
 
 const app = express()
@@ -30,7 +35,22 @@ app.use(function (req, res, next) {
   });
 });
 
-  
+///////////////////////////////////////
+// Handle socket connection 
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: '*'
+  }
+});
+const alertHandler = require("./sockets/socketHandler");
+
+const onConnection = (socket) => {
+  alertHandler(io, socket);
+}
+
+io.on("connection", onConnection);
+/////////////////////////////////////
 
 // Launch app to listen to specified port
 const port = process.env.PORT || 8080;
