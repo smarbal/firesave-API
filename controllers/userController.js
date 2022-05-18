@@ -15,9 +15,9 @@ exports.userList = async function (req, res) {
 
 exports.userCreate = async function (req, res) {
     let hash = bcrypt.hashSync(req.body.password, 5)
-    let user = User.create({ service_number: req.body.service_number, lastname: req.body.lastname, firstname: req.body.firstname,username: req.body.username ,prom_name: req.body.prom_name, room: req.body.room, password: hash})
+    let user = User.create({ service_number: req.body.service_number, lastname: req.body.lastname, firstname: req.body.firstname,username: req.body.username , prom_name: req.body.prom_name, room: req.body.room, password: hash})
         .then(data => {
-            console.log(user.toJSON());
+            console.log(data);
             res.json(data);
         })
         .catch(err => {
