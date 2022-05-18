@@ -12,7 +12,7 @@ const User = db.define('user', {
     lastname: { type: Sequelize.STRING, allowNull: false },
     firstname: { type: Sequelize.STRING, allowNull: false },
     username: { type: Sequelize.STRING, allowNull: false },
-    room: { type: Sequelize.INTEGER, allowNull: false }, 
+    room: { type: Sequelize.STRING, allowNull: false }, 
     inside: {type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true},
     password: {type: Sequelize.STRING, allowNull: false}
 }, { timestamps: false })
