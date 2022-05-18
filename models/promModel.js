@@ -8,7 +8,7 @@ const Prom = db.define('prom', {
         allowNull: false,
         primaryKey: true
     },
-    name: { type: Sequelize.STRING, allowNull: false },
+    prom_name: { type: Sequelize.STRING, allowNull: false },
     battalion: { type: Sequelize.STRING, allowNull: false }
 }, { timestamps: false })
 

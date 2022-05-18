@@ -1,6 +1,4 @@
 
-import { createServer } from "http";
-import { Server } from "socket.io";
 
 const express = require('express');
 const cors = require('cors');
@@ -37,8 +35,8 @@ app.use(function (req, res, next) {
 
 ///////////////////////////////////////
 // Handle socket connection 
-const httpServer = createServer();
-const io = new Server(httpServer, {
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer, {
   cors: {
     origin: '*'
   }
