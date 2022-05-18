@@ -18,7 +18,6 @@ db.User.hasOne( db.Prom, { as: 'manager', constraints: false, allowNull:true, de
 //db.User.hasOne(db.Prom, { as: 'Manager'});
 
 // Creating all the tables defined in user
-// db.sync();
-sequelize.sync({force: true})
+sequelize.sync({})
 
 module.exports = db
