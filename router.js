@@ -7,8 +7,9 @@ const userController = require('./controllers/userController');
 const promController = require('./controllers/promController');
 const authController = require('./controllers/authController');
 
+router.post('/register', userController.userCreate)
+
 router.get('/user', userController.userList);
-router.post('/user', userController.userCreate)
 router.put('/user/:user_id', userController.userUpdate);
 router.delete('/user/:user_id', userController.userDelete);
 router.get('/user/find/:user_id', userController.userFindOne)
