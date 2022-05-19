@@ -19,6 +19,7 @@
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.19.0",
     "fireorm": "^0.23.3",
+    "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.19.0",

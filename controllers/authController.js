@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const db = require('../models/index');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+var _ = require('lodash');
 
 const User = db.User;
 const Prom = db.Prom;
@@ -31,10 +32,11 @@ exports.login = async (req, res) => {
     let result = bcrypt.compareSync(req.body.password, user.password)
 
     if (result) {
-      console.log("User:", JSON.stringify(user, null, 2));
       let privateKey = process.env.JWT_PASSWORD;
       let token = jwt.sign({ "service_number": User.service_number }, privateKey);
-      res.send({ "token": token });
+      var saveableUser = _.pick(user, ['service_number', 'lastname', 'firstname', 'username', 'room', 'inside','prom_name']);
+      console.log("User:", JSON.stringify(saveableUser, null, 2));
+      res.send({ "token": token, "user": saveableUser });
     }
 
     else {

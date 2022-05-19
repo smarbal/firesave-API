@@ -11,6 +11,7 @@ router.post('/register', userController.userCreate)
 
 router.get('/user', userController.userList);
 router.put('/user/:user_id', userController.userUpdate);
+router.put('/inside/:service_number', userController.userUpdateInside);
 router.delete('/user/:user_id', userController.userDelete);
 router.get('/user/find/:user_id', userController.userFindOne)
 //router.get('/user/filter', userController.userFindOp);

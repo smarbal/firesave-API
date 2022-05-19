@@ -44,8 +44,8 @@ exports.userUpdate = async function (req, res) {
 exports.userUpdateInside = async function (req, res) {
     if (req.params.service_number > 0) {
         await User.update(
-            { inside: req.body.inside  },
-            { where: { service_number: req.params.service_number } }
+            { inside: req.body.inside === 'true'},
+            { where: { service_number: Number(req.params.service_number) } }
         )
             .then(data => {
                 res.json(data);
