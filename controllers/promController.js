@@ -27,10 +27,10 @@ exports.promCreate = async (req, res) => {
 }
 
 exports.promUpdate = async function (req, res) {
-    if (req.params.prom_id > 0) {
+    if (req.params.prom_name > 0) {
         await Prom.update(
             { name: req.body.name, battalion: req.body.battalion, managerServiceNumber: req.body.managerServiceNumber },
-            { where: { prom_id: req.params.prom_id } }
+            { where: { prom_name: req.params.prom_name } }
         )
             .then(data => {
                 res.json(data);
@@ -43,8 +43,8 @@ exports.promUpdate = async function (req, res) {
 }
 
 exports.promDelete = async function (req, res) {
-    if (req.params.prom_id) {
-        await Prom.destroy({ where: { prom_id: req.params.prom_id } })
+    if (req.params.prom_name) {
+        await Prom.destroy({ where: { prom_name: req.params.prom_name } })
             .then(data => {
                 res.json(data);
             })
@@ -56,8 +56,8 @@ exports.promDelete = async function (req, res) {
 }
 
 exports.promFindOne = async function (req, res) {
-    if (req.params.prom_id) {
-        await Prom.findOne({ where: { prom_id: req.params.prom_id } })
+    if (req.params.prom_name) {
+        await Prom.findOne({include: [User]},{ where: { prom_name: req.params.prom_name } })
             .then(data => {
                 res.json(data);
             })
@@ -70,8 +70,8 @@ exports.promFindOne = async function (req, res) {
 
 
 exports.promAddUser = async function (req, res) {
-    if (req.params.prom_id) {
-        const prom = await Prom.findOne({ where: { prom_id: req.params.prom_id } })
+    if (req.params.prom_name) {
+        const prom = await Prom.findOne({ where: { prom_name: req.params.prom_name } })
         prom.addUser({ where: { service_number: req.params.service_number } })
         .then(data => {
             res.json(data);
@@ -83,8 +83,8 @@ exports.promAddUser = async function (req, res) {
     else res.status(400).json({ message: 'Prom not found' })
 }
 exports.promRemoveUser = async function (req, res) {
-    if (req.params.prom_id) {
-        const prom = await Prom.findOne({ where: { prom_id: req.params.prom_id } })
+    if (req.params.prom_name) {
+        const prom = await Prom.findOne({ where: { prom_name: req.params.prom_name } })
         prom.removeUser({ where: { service_number: req.params.service_number } })
         .then(data => {
             res.json(data);
