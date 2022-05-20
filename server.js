@@ -36,11 +36,9 @@ app.use(function (req, res, next) {
 ///////////////////////////////////////
 // Handle socket connection 
 const httpServer = require("http").createServer();
-const io = require("socket.io")(httpServer, {
-  cors: {
-    origin: '*'
-  }
-});
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 const alertHandler = require("./sockets/socketHandler");
 
 const onConnection = (socket) => {
@@ -48,6 +46,11 @@ const onConnection = (socket) => {
 }
 
 io.on("connection", onConnection);
+
+http.listen(4444, () => {
+  console.log('Websocket listening on port 4444');
+});
+
 /////////////////////////////////////
 
 // Launch app to listen to specified port

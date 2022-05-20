@@ -10,10 +10,10 @@ const authController = require('./controllers/authController');
 router.post('/register', userController.userCreate)
 
 router.get('/user', userController.userList);
-router.put('/user/:user_id', userController.userUpdate);
+router.put('/user/:service_number', userController.userUpdate);
 router.put('/inside/:service_number', userController.userUpdateInside);
-router.delete('/user/:user_id', userController.userDelete);
-router.get('/user/find/:user_id', userController.userFindOne)
+router.delete('/user/:service_number', userController.userDelete);
+router.get('/user/find/:service_number', userController.userFindOne)
 //router.get('/user/filter', userController.userFindOp);
 router.get('/user/order', userController.userOrder);
 
