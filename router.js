@@ -20,7 +20,7 @@ router.get('/user/order', userController.userOrder);
 
 router.get('/prom', promController.promList);
 router.post('/prom', promController.promCreate)
-router.put('/prom/:prom_name', promController.promUpdate); // router.put('/prom/:prom_id', authController.verifyToken,promController.promUpdate);
+router.put('/prom/:prom_name', authController.isManager, promController.promUpdate); // router.put('/prom/:prom_id', authController.verifyToken,promController.promUpdate);
 
 router.delete('/prom/:prom_name', promController.promDelete);
 router.get('/prom/find/:prom_name', promController.promFindOne)

@@ -8,7 +8,7 @@ const User = db.User;
 const Prom = db.Prom;
 
 
-exports.verifyToken = (req, res, next) => {
+async function verifyToken(req, res, next){
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
@@ -17,11 +17,44 @@ exports.verifyToken = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_PASSWORD);
-    req.user = decoded;
+    console.log(decoded)
+    let user = await User.findOne({ where: { service_number: decoded.service_number } })
+    return user
   } catch (err) {
     return res.status(401).send("Invalid Token");
   }
-  return next();
+};
+
+exports.isAdmin = async (req, res, next) => {   
+
+  user = await verifyToken(req, res, next);
+
+  if(user.isAdmin){
+    return next();
+  }
+  else{
+    return res.status(401).send("User is not admin");
+  }
+  
+};
+
+exports.isManager = async (req, res, next) => {   
+  const prom_name = req.body.prom_name || req.params.prom_name
+
+  if (!prom_name) {
+    return res.status(403).send("Specify the prom");
+  }
+
+  user = await verifyToken(req, res, next);
+  prom = await Prom.findOne({ where: { prom_name: prom_name } })
+  console.log(prom)
+  if(user.service_number === prom.managerServiceNumber){
+    return next();
+  }
+  else{
+    return res.status(401).send("User is not manager");
+  }
+  
 };
 
 exports.login = async (req, res) => {
@@ -33,7 +66,7 @@ exports.login = async (req, res) => {
 
     if (result) {
       let privateKey = process.env.JWT_PASSWORD;
-      let token = jwt.sign({ "service_number": User.service_number }, privateKey);
+      let token = jwt.sign({service_number: user.service_number}, privateKey);
       var saveableUser = _.pick(user, ['service_number', 'lastname', 'firstname', 'username', 'room', 'inside','prom_name']);
       console.log("User:", JSON.stringify(saveableUser, null, 2));
       res.send({ "token": token, "user": saveableUser });

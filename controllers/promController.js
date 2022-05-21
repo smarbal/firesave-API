@@ -27,7 +27,8 @@ exports.promCreate = async (req, res) => {
 }
 
 exports.promUpdate = async function (req, res) {
-    if (req.params.prom_name > 0) {
+    
+    if (req.params.prom_name) {
         await Prom.update(
             { name: req.body.name, battalion: req.body.battalion, managerServiceNumber: req.body.managerServiceNumber },
             { where: { prom_name: req.params.prom_name } }
