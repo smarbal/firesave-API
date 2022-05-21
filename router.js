@@ -8,23 +8,27 @@ const promController = require('./controllers/promController');
 const authController = require('./controllers/authController');
 
 router.post('/register', userController.userCreate)
+router.post('/login', authController.login)
 
 router.get('/user', userController.userList);
-router.put('/user/:service_number', userController.userUpdate);
+router.put('/user/:service_number', authController.isUser, userController.userUpdate);
 router.put('/inside/:service_number', userController.userUpdateInside);
-router.delete('/user/:service_number', userController.userDelete);
+router.delete('/user/:service_number', authController.isAdmin, userController.userDelete);
 router.get('/user/find/:service_number', userController.userFindOne)
 //router.get('/user/filter', userController.userFindOp);
 router.get('/user/order', userController.userOrder);
 
 
-router.get('/prom', promController.promList);
-router.post('/prom', promController.promCreate)
-router.put('/prom/:prom_name', authController.isManager, promController.promUpdate); // router.put('/prom/:prom_id', authController.verifyToken,promController.promUpdate);
+router.get('/prom', authController.isAdmin,promController.promList);
+router.post('/prom', authController.isAdmin, promController.promCreate)
+router.put('/prom/:prom_name', authController.isAdmin, promController.promUpdate); 
 
-router.delete('/prom/:prom_name', promController.promDelete);
-router.get('/prom/find/:prom_name', promController.promFindOne)
+router.put('/prom/:prom_name', authController.isManager, promController.promAddUser);
+router.put('/prom/:prom_name', authController.isManager, promController.promRemoveUser);
 
-router.post('/login', authController.login)
+router.delete('/prom/:prom_name', authController.isAdmin ,promController.promDelete);
+
+router.get('/prom/find/:prom_name', promController.promFindOne);
+
 
 module.exports = router;

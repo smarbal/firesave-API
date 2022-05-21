@@ -37,6 +37,21 @@ exports.isAdmin = async (req, res, next) => {
   }
   
 };
+exports.isUser = async (req, res, next) => {    //For functions that only the user himself can change
+
+  const service_number = req.body.service_number || req.params.service_number
+
+  
+  user = await verifyToken(req, res, next);
+  
+  if(user.service_number == service_number){
+    return next();
+  }
+  else{
+    return res.status(401).send("User is not himself");
+  }
+  
+};
 
 exports.isManager = async (req, res, next) => {   
   const prom_name = req.body.prom_name || req.params.prom_name
@@ -48,7 +63,7 @@ exports.isManager = async (req, res, next) => {
   user = await verifyToken(req, res, next);
   prom = await Prom.findOne({ where: { prom_name: prom_name } })
   console.log(prom)
-  if(user.service_number === prom.managerServiceNumber){
+  if(user.service_number == prom.managerServiceNumber){
     return next();
   }
   else{
