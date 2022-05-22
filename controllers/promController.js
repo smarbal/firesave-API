@@ -73,25 +73,28 @@ exports.promFindOne = async function (req, res) {
 exports.promAddUser = async function (req, res) {
     if (req.params.prom_name) {
         const prom = await Prom.findOne({ where: { prom_name: req.params.prom_name } })
-        prom.addUser({ where: { service_number: req.params.service_number } })
+        prom.addUser({ where: { service_number: req.body.service_number } })
         .then(data => {
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
+            res.json({ message: err.message })
         })
     }
     else res.status(400).json({ message: 'Prom not found' })
 }
 exports.promRemoveUser = async function (req, res) {
     if (req.params.prom_name) {
+        console.log(req.body.service_number)
         const prom = await Prom.findOne({ where: { prom_name: req.params.prom_name } })
-        prom.removeUser({ where: { service_number: req.params.service_number } })
+        const user = await User.findOne({include: [Prom]},{ where: { service_number: req.body.service_number } })
+        console.log(user)
+        prom.removeUser(user)
         .then(data => {
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
+            res.json({ message: err.message })  //Bugged library, seems to have an error even though the user is deleted
         })
     }
     else res.status(400).json({ message: 'Prom not found' })

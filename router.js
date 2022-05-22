@@ -23,8 +23,8 @@ router.get('/prom', authController.isAdmin,promController.promList);
 router.post('/prom', authController.isAdmin, promController.promCreate)
 router.put('/prom/:prom_name', authController.isAdmin, promController.promUpdate); 
 
-router.put('/prom/:prom_name', authController.isManager, promController.promAddUser);
-router.put('/prom/:prom_name', authController.isManager, promController.promRemoveUser);
+router.put('/promAdd/:prom_name', authController.isManager, promController.promAddUser);
+router.put('/promRemove/:prom_name', authController.isManager, promController.promRemoveUser);
 
 router.delete('/prom/:prom_name', authController.isAdmin ,promController.promDelete);
 

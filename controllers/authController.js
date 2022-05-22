@@ -61,9 +61,9 @@ exports.isManager = async (req, res, next) => {
   }
 
   user = await verifyToken(req, res, next);
-  prom = await Prom.findOne({ where: { prom_name: prom_name } })
-  console.log(prom)
-  if(user.service_number == prom.managerServiceNumber){
+  prom = await Prom.findOne({ include: [{ model: User, as: 'manager' }] },{where: { prom_name: req.params.prom_name }})
+  console.log(prom.manager)
+  if(prom.manager.some(el => el.service_number === user.service_number)){
     return next();
   }
   else{
@@ -82,7 +82,7 @@ exports.login = async (req, res) => {
     if (result) {
       let privateKey = process.env.JWT_PASSWORD;
       let token = jwt.sign({service_number: user.service_number}, privateKey);
-      var saveableUser = _.pick(user, ['service_number', 'lastname', 'firstname', 'username', 'room', 'inside','prom_name']);
+      var saveableUser = _.pick(user, ['service_number', 'lastname', 'firstname', 'username', 'room', 'inside','prom_name', 'isAdmin']);
       console.log("User:", JSON.stringify(saveableUser, null, 2));
       res.send({ "token": token, "user": saveableUser });
     }

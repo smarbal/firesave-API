@@ -11,8 +11,8 @@ db.User = require('./userModel');
 db.Prom.hasMany( db.User, { foreignKey: "prom_name" });
 db.User.belongsTo( db.Prom, { foreignKey: "prom_name" });
 
-db.Prom.belongsTo( db.User, { as: 'manager', constraints: false, allowNull:true, defaultValue:null });
-db.User.hasOne( db.Prom, { as: 'manager', constraints: false, allowNull:true, defaultValue:null });
+db.Prom.belongsToMany( db.User, { as: 'manager', constraints: false, allowNull:true, defaultValue:null, through: "managers", foreignKey: 'prom_name', timestamps: false});
+db.User.belongsToMany( db.Prom, { as: 'manager', constraints: false, allowNull:true, defaultValue:null, through: "managers", foreignKey: 'service_number' });
 
 
 //db.User.hasOne(db.Prom, { as: 'Manager'});
