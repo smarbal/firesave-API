@@ -14,7 +14,7 @@ exports.promList = async function (req, res) {
 }
 
 exports.promCreate = async (req, res) => {
-    let prom = Prom.build({ name: req.body.name, battalion: req.body.battalion, managerServiceNumber: req.body.managerServiceNumber })
+    let prom = Prom.build({ prom_name: req.body.prom_name, battalion: req.body.battalion})
     await prom.save()
         .then(data => {
             console.log(prom.toJSON());
