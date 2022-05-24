@@ -13,7 +13,7 @@ router.post('/login', authController.login)
 router.get('/user', userController.userList);
 router.put('/user/:service_number', authController.isUser, userController.userUpdate);
 router.put('/inside/:service_number', userController.userUpdateInside);
-router.delete('/user/:service_number', authController.isAdmin, userController.userDelete);
+router.delete('/user/:service_number', authController.isUser, userController.userDelete); // isAdmin can also be possible
 router.get('/user/find/:service_number', userController.userFindOne)
 //router.get('/user/filter', userController.userFindOp);
 router.get('/user/order', userController.userOrder);
