@@ -3,7 +3,7 @@ const Prom = db.Prom;
 const User = db.User;
 
 exports.promList = async function (req, res) {
-    await Prom.findAll({ include: [User] })
+    await Prom.findAll({ include: [User, { model: User, as: 'manager' }] }) 
         .then(data => {
             console.log("All proms:", JSON.stringify(data, null, 2));
             res.json(data);
