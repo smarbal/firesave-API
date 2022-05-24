@@ -43,6 +43,7 @@ const alertHandler = require("./sockets/socketHandler");
 
 const onConnection = (socket) => {
   alertHandler(io, socket);
+  console.log(alert)
 }
 
 io.on("connection", onConnection);

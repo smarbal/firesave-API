@@ -3,8 +3,14 @@ const Prom = db.Prom;
 const User = db.User;
 
 exports.promList = async function (req, res) {
-    await Prom.findAll({ include: [User, { model: User, as: 'manager' }] }) 
+    if(!alert){         // Check if in alert mode and 
+        attributes = ["firstname", "lastname", "service_number", "room"]
+    }
+    else attributes = ["firstname", "lastname", "service_number", "room", 'inside']
+    
+    await Prom.findAll({ include: [{model: User, attributes: attributes}, { model: User, as: 'manager' }] }) 
         .then(data => {
+            
             console.log("All proms:", JSON.stringify(data, null, 2));
             res.json(data);
         })
@@ -58,7 +64,11 @@ exports.promDelete = async function (req, res) {
 
 exports.promFindOne = async function (req, res) {
     if (req.params.prom_name) {
-        await Prom.findOne({include: [User]},{ where: { prom_name: req.params.prom_name } })
+        if(!alert){         // Check if in alert mode and 
+            attributes = ["firstname", "lastname", "service_number", "room"]
+        }
+        else attributes = ["firstname", "lastname", "service_number", "room", 'inside']
+        await Prom.findOne({include: [{model: User, attributes: attributes}]},{ where: { prom_name: req.params.prom_name } })
             .then(data => {
                 res.json(data);
             })
