@@ -8,7 +8,7 @@ exports.promList = async function (req, res) {
     }
     else attributes = ["firstname", "lastname", "service_number", "room", 'inside']
     
-    await Prom.findAll({ include: [{model: User, attributes: attributes}, { model: User, as: 'manager' }] }) 
+    await Prom.findAll({ include: [{model: User, attributes: attributes}, { model: User, as: 'manager', attributes: attributes }] }) 
         .then(data => {
             
             console.log("All proms:", JSON.stringify(data, null, 2));
