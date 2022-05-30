@@ -28,7 +28,7 @@ router.put('/promRemove/:prom_name', authController.isManager, promController.pr
 
 router.delete('/prom/:prom_name', authController.isAdmin ,promController.promDelete);
 
-router.get('/prom/find/:prom_name', promController.promFindOne);
+router.get('/prom/find/:prom_name',authController.isAdmin , promController.promFindOne);
 
 
 module.exports = router;
