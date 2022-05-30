@@ -16,7 +16,7 @@ router.put('/inside/:service_number', authController.isUser,userController.userU
 router.delete('/user/:service_number', authController.isUser, userController.userDelete); // isAdmin can also be possible
 router.get('/user/find/:service_number', authController.isUser, userController.userFindOne)
 //router.get('/user/filter', userController.userFindOp);
-//router.get('/user/order', userController.userOrder);
+router.get('/user/order', userController.userOrder);
 
 
 router.get('/prom', authController.isAdmin,promController.promList);
