@@ -68,8 +68,9 @@ exports.promFindOne = async function (req, res) {
             attributes = ["firstname", "lastname", "service_number", "room"]
         }
         else attributes = ["firstname", "lastname", "service_number", "room", 'inside']
-        await Prom.findOne({include: [{model: User, attributes: attributes}, { model: User, as: 'manager' }]},{ where: { prom_name: req.params.prom_name } })
+        await Prom.findOne({include: [{model: User, attributes: attributes}, { model: User, as: 'manager' }], where: { prom_name: req.params.prom_name } })
             .then(data => {
+                console.log(data)
                 res.json(data);
             })
             .catch(err => {
