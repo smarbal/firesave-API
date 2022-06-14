@@ -10,7 +10,7 @@ const authController = require('./controllers/authController');
 router.post('/register', userController.userCreate)
 router.post('/login', authController.login)
 
-router.get('/user', authController.isAdmin, userController.userList);
+router.get('/user', authController.isAdmin,userController.userList);
 router.put('/user/:service_number', authController.isUser, userController.userUpdate);
 router.put('/inside/:service_number', authController.isUser,userController.userUpdateInside);
 router.delete('/user/:service_number', authController.isUser, userController.userDelete); // isAdmin can also be possible
@@ -28,7 +28,7 @@ router.put('/promRemove/:prom_name', authController.isManager, promController.pr
 
 router.delete('/prom/:prom_name', authController.isAdmin ,promController.promDelete);
 
-router.get('/prom/find/:prom_name',authController.isAdmin , promController.promFindOne);
+router.get('/prom/find/:prom_name', promController.promFindOne);
 
 
 module.exports = router;
