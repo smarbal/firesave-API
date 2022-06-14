@@ -37,7 +37,12 @@ app.use(function (req, res, next) {
 // Handle socket connection 
 const httpServer = require("http").createServer();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 const alertHandler = require("./sockets/socketHandler");
 
